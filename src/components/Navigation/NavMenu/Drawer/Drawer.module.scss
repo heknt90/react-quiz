@@ -17,6 +17,8 @@ $background: #fff;
     transform: translateX(-300px);
     transition: transform .3s ease-in;
 
+    z-index: 10;
+
     &.open {
         transform: translateX(0);
     }

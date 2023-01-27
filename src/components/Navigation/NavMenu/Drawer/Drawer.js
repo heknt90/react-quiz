@@ -7,7 +7,9 @@ const Drawer = props => {
         return props.links.map((link, index) => {
             return (
                 <li key={index} >
-                    <NavLink to={link.to}>
+                    <NavLink 
+                        to={link.to} 
+                        onClick={ props.clickHandler }>
                         { link.label}
                     </NavLink>
                 </li>
