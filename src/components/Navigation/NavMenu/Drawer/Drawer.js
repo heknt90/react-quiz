@@ -1,14 +1,15 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import classes from './Drawer.module.scss'
 
 const Drawer = props => {
     const renderLinks = () => {
         return props.links.map((link, index) => {
             return (
-                <li key={index}>
-                    <a href={link.to}>
+                <li key={index} >
+                    <NavLink to={link.to}>
                         { link.label}
-                    </a>
+                    </NavLink>
                 </li>
             )
         })

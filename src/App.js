@@ -1,3 +1,6 @@
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import NotFound from './containers/NotFound/NotFound';
 import QuizList from './containers/QuizList/QuizList';
 import Layout from './hoc/Layout/Layout';
 
@@ -5,7 +8,10 @@ function App() {
   return (
     <div>
       <Layout>
-        <QuizList />
+        <Routes>
+          <Route path="/" element={<QuizList />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </Layout>
     </div>
   );
