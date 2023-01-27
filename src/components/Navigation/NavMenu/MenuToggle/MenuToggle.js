@@ -8,7 +8,7 @@ const MenuToggle = props => {
         'fa',
         iconClass
     ]
-    
+
     if (!props.isClose) {
         cls.push(classes.open)
     }
