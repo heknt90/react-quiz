@@ -11,17 +11,31 @@ const cls = [
 export default class Auth extends Component {
 
     state = {
-        value:  '',
         formControls: {
-            email: '',
-            password: ''
+            email: {
+                type: 'email',
+                label: "Введите ваш email" ,
+                value: "",
+            },
+            password: {
+                type: 'password',
+                label: "Введите пароль" ,
+                value: "",
+            }
         }
     }
 
-    changeHandler = (event) => {
-        console.log('changed input value', event.target.type)
+    submitFormHandler = (event) => {
+        event.preventDefault()
+    }
+
+    changeHandler = (event, controlName) => {
         const formControls = this.state.formControls
-        formControls[event.target.type] = event.target.value
+        const control = formControls[controlName]
+        
+        control.value = event.target.value
+
+        formControls[controlName] = control
         this.setState({ formControls })
     }
 
@@ -33,22 +47,31 @@ export default class Auth extends Component {
 
     }
 
+    renderInputs = () => {
+        
+        return Object.keys(this.state.formControls).map((controlName, index) => {
+            const control = this.state.formControls[controlName]
+
+            return (
+                <Input 
+                    key={ controlName + index }
+                    type={ control.type }
+                    label={ control.label } 
+                    value={ control.value }
+                    changeHandler={ event => this.changeHandler( event, controlName ) } />
+            )
+        })
+
+    }
+
     render() {
         return (
             <div className={cls.join(' ')}>
                 <h1>Авторизация</h1>
     
-                <form>
-                    <Input 
-                        type="email"
-                        label="Введите ваш email" 
-                        value={ this.state.formControls.email }
-                        changeHandler={ event => this.changeHandler(event) } />
-                    <Input 
-                        type="password"
-                        label="Введите пароль" 
-                        value={ this.state.formControls.password }
-                        changeHandler={ event => this.changeHandler(event) } />
+                <form onSubmit={this.submitFormHandler}>
+                    
+                    { this.renderInputs() }
     
                     <Button 
                         type="success"
