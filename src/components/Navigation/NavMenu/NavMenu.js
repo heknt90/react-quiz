@@ -8,7 +8,7 @@ class NavMenu extends Component {
         isOpen: false,
         links: [
             {to: '/', label: 'Главная'},
-            {to: '/quiz-creator', label: 'Создать викторину'},
+            {to: '/quiz/create', label: 'Создать викторину'},
             {to: '/auth', label: 'Авторизация'},
         ]
     }
