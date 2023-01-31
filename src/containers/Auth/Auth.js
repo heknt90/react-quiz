@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import validateControl from '../../utils/forms/validation/validation'
 import classes from './Auth.module.scss'
 
 const cls = [
@@ -16,11 +17,25 @@ export default class Auth extends Component {
                 type: 'email',
                 label: "Введите ваш email" ,
                 value: "",
+                isInvalid: true,
+                isTouched: false,
+                validations: {
+                    required: true,
+                    email: true
+                },
+                errorMessage: "Введите корректный email"
             },
             password: {
                 type: 'password',
                 label: "Введите пароль" ,
                 value: "",
+                isInvalid: true,
+                isTouched: false,
+                validations: {
+                    required: true,
+                    minLength: 6
+                },
+                errorMessage: "Пароль должен быть не короче 6 символов"
             }
         }
     }
@@ -34,7 +49,11 @@ export default class Auth extends Component {
         const control = formControls[controlName]
         
         control.value = event.target.value
-
+        if ( !control.isTouched ) {
+            control.isTouched = true
+        }
+        control.isInvalid = validateControl(control)
+        
         formControls[controlName] = control
         this.setState({ formControls })
     }
@@ -54,10 +73,13 @@ export default class Auth extends Component {
 
             return (
                 <Input 
-                    key={ controlName + index }
+                    key={ index }
                     type={ control.type }
                     label={ control.label } 
                     value={ control.value }
+                    isInvalid={ control.isInvalid }
+                    isTouched={ control.isTouched }
+                    errorMessage={ control.errorMessage }
                     changeHandler={ event => this.changeHandler( event, controlName ) } />
             )
         })
