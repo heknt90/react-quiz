@@ -22,8 +22,6 @@ export default class QuizList extends Component {
     }
 
     render() {
-        console.log( this.renderQuiz() )
-
         return (
             <div className={cls.join(' ')}>
                 <div>
