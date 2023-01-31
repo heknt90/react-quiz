@@ -40,6 +40,16 @@ export default class Auth extends Component {
         }
     }
 
+    isFormValid = () => {
+        let isValid = true
+        Object.keys(this.state.formControls).forEach(controlName => {
+            if (this.state.formControls[controlName].isInvalid) {
+                isValid = false
+            }
+        })
+        return isValid
+    }
+
     submitFormHandler = (event) => {
         event.preventDefault()
     }
@@ -47,7 +57,8 @@ export default class Auth extends Component {
     changeHandler = (event, controlName) => {
         const formControls = this.state.formControls
         const control = formControls[controlName]
-        
+        const isFormValid = this.isFormValid()
+
         control.value = event.target.value
         if ( !control.isTouched ) {
             control.isTouched = true
@@ -55,7 +66,11 @@ export default class Auth extends Component {
         control.isInvalid = validateControl(control)
         
         formControls[controlName] = control
-        this.setState({ formControls })
+
+        this.setState({ 
+            formControls,
+            isFormValid 
+        })
     }
 
     loginHandler = () => {
@@ -97,14 +112,12 @@ export default class Auth extends Component {
     
                     <Button 
                         type="success"
-    
-                        >
+                        disabled={ !this.isFormValid() } >
                             Авторизация
                     </Button>
                     <Button 
                         type="primary"
-    
-                        >
+                        disabled={ !this.isFormValid() } >
                             Зарегистрироваться
                     </Button>
                 </form>
